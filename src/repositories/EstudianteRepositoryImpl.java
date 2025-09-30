@@ -1,9 +1,13 @@
 package repositories;
 
 import entities.Estudiante;
+import entities.EstudianteCarrera;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
 
 public class EstudianteRepositoryImpl implements EstudianteRepository{
 
@@ -12,9 +16,10 @@ public class EstudianteRepositoryImpl implements EstudianteRepository{
 
     public EstudianteRepositoryImpl(EntityManager em) {
     }
-
-    public Estudiante getEstudiante(int dni) {
-        return em.find(Estudiante.class, dni);
+    @Override
+    @Transactional
+    public Estudiante getEstudiantePorLU(int LU) {
+        return em.find(Estudiante.class, LU);
     }
 
     @Override
@@ -35,4 +40,24 @@ public class EstudianteRepositoryImpl implements EstudianteRepository{
             em.remove(estudiante);
         }
     }
+
+    @Override
+    @Transactional
+    public List<Estudiante> getEstudiantes() {
+        return em.createQuery(
+                        "SELECT e FROM Estudiante e ORDER BY e.apellido DESC",
+                        Estudiante.class)
+                .getResultList();
+    }
+
+    @Override
+    @Transactional
+    public List<Estudiante> getEstudiantesGenero(String genero) {
+        return em.createQuery(
+                        "SELECT e FROM Estudiante e WHERE e.genero = :genero",
+                        Estudiante.class)
+                .setParameter("genero", genero)
+                .getResultList();
+    }
+
 }
