@@ -56,7 +56,7 @@ public class Carrera {
     }
 
     public List<EstudianteCarrera> getEstudianteCarrera() {
-        return estudianteCarrera;
+        return  new ArrayList<>(estudianteCarrera);
     }
 
     public void setEstudianteCarrera(List<EstudianteCarrera> estudianteCarrera) {
