@@ -2,6 +2,8 @@
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import utils.DBHelper;
+
 import java.time.LocalDateTime;
 
 public class Main {
@@ -13,6 +15,9 @@ public class Main {
 
         // Comenzar la transacción
         em.getTransaction().begin();
+
+        DBHelper helper = new DBHelper(em);
+        helper.fillEstudiante();
 
         // Commit y cerrar EntityManager
         em.getTransaction().commit();
