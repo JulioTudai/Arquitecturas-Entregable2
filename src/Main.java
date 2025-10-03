@@ -1,7 +1,9 @@
 
+import entities.Estudiante;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import repositories.EstudianteRepositoryImpl;
 import utils.DBHelper;
 
 import java.time.LocalDateTime;
@@ -18,7 +20,7 @@ public class Main {
 
         DBHelper helper = new DBHelper(em);
         helper.fillEstudiante();
-
+        helper.fillCarrera();
         // Commit y cerrar EntityManager
         em.getTransaction().commit();
         em.close();

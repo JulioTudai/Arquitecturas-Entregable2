@@ -1,6 +1,7 @@
 package repositories;
 
 import entities.Carrera;
+import entities.Estudiante;
 import entities.EstudianteCarrera;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,7 +15,9 @@ public class CarreraRepositoryImpl implements CarreraRepository{
     private EntityManager em;
 
 
-    public CarreraRepositoryImpl(EntityManager em) {}
+    public CarreraRepositoryImpl(EntityManager em) {
+        this.em = em;
+    }
 
 
     @Override
@@ -27,6 +30,12 @@ public class CarreraRepositoryImpl implements CarreraRepository{
                 "GROUP BY c" +
                 "ORDER BY COUNT(ec) DESC", Carrera.class)
                 .getResultList();
+    }
+
+
+    @Transactional
+    public void saveCarrera(Carrera carrera) {
+       this.em.persist(carrera);
     }
 
 }

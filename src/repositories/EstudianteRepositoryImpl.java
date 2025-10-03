@@ -15,6 +15,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository{
     private EntityManager em;
 
     public EstudianteRepositoryImpl(EntityManager em) {
+        this.em = em;
     }
     @Override
     @Transactional
