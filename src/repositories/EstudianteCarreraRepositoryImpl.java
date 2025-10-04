@@ -18,6 +18,7 @@ public class EstudianteCarreraRepositoryImpl implements EstudianteCarreraReposit
     private EntityManager em;
 
     public EstudianteCarreraRepositoryImpl(EntityManager em) {
+        this.em = em;
     }
 
     @Transactional

@@ -35,7 +35,7 @@ public class CarreraRepositoryImpl implements CarreraRepository{
 
     @Transactional
     public void saveCarrera(Carrera carrera) {
-       this.em.persist(carrera);
+       this.em.merge(carrera);
     }
 
 }

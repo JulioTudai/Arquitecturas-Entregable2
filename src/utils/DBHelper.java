@@ -63,21 +63,17 @@ public class DBHelper {
         String ruta = "src/data/estudianteCarrera.csv";
 
         for (CSVRecord record : LectorCSV.leerCSV(ruta)) {
-            EstudianteCarrera ec = new EstudianteCarrera(
-                    Integer.parseInt(record.get("id")),
-                    Integer.parseInt(record.get("id_estudiante")),
-                    Integer.parseInt(record.get("id_carrera")),
-                    Integer.parseInt(record.get("inscripcion")),
-                    Integer.parseInt(record.get("graduacion")),
-                    Integer.parseInt(record.get("antiguedad"))
-            );
 
-            repo.inscribirEstudiante(ec);
+            Estudiante estudiante = em.find(Estudiante.class, Integer.parseInt(record.get("id_estudiante")));
+            Carrera carrera = em.find(Carrera.class, Integer.parseInt(record.get("id_carrera")));
 
+            int inscripcion = Integer.parseInt(record.get("inscripcion"));
+            int graduacion = Integer.parseInt(record.get("graduacion"));
+            int antiguedad = Integer.parseInt(record.get("antiguedad"));
 
+            repo.inscribirEstudiante(estudiante, carrera, inscripcion, graduacion, antiguedad);
         }
 
-        System.out.println("Inscripciones insertadas.");
     }
 
 

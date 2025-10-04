@@ -21,6 +21,7 @@ public class Main {
         DBHelper helper = new DBHelper(em);
         helper.fillEstudiante();
         helper.fillCarrera();
+        helper.fillEstudianteCarrera();
         // Commit y cerrar EntityManager
         em.getTransaction().commit();
         em.close();
