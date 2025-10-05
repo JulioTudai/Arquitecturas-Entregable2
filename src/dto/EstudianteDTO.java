@@ -58,4 +58,15 @@ public class EstudianteDTO {
     public void setLU(int LU) {
         this.LU = LU;
     }
+
+    @Override
+    public String toString() {
+        return "EstudianteDTO{" +
+                "dni=" + dni +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", genero='" + genero + '\'' +
+                ", LU=" + LU +
+                '}';
+    }
 }

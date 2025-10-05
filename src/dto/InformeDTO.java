@@ -3,11 +3,11 @@ package dto;
 public class InformeDTO {
 
     private String nombreCarrera;
-    private int cantidadInscriptos;
-    private int cantidadGraduados;
+    private long cantidadInscriptos;
+    private long cantidadGraduados;
     private int anio;
 
-    public InformeDTO(String nombreCarrera, int cantidadInscriptos, int cantidadGraduados, int anio){
+    public InformeDTO(String nombreCarrera, long cantidadInscriptos, long cantidadGraduados, int anio) {
         this.nombreCarrera = nombreCarrera;
         this.cantidadInscriptos = cantidadInscriptos;
         this.cantidadGraduados = cantidadGraduados;
@@ -22,19 +22,19 @@ public class InformeDTO {
         this.nombreCarrera = nombreCarrera;
     }
 
-    public int getCantidadInscriptos() {
+    public long getCantidadInscriptos() {
         return cantidadInscriptos;
     }
 
-    public void setCantidadInscriptos(int cantidadInscriptos) {
+    public void setCantidadInscriptos(long cantidadInscriptos) {
         this.cantidadInscriptos = cantidadInscriptos;
     }
 
-    public int getCantidadGraduados() {
+    public long getCantidadGraduados() {
         return cantidadGraduados;
     }
 
-    public void setCantidadGraduados(int cantidadGraduados) {
+    public void setCantidadGraduados(long cantidadGraduados) {
         this.cantidadGraduados = cantidadGraduados;
     }
 

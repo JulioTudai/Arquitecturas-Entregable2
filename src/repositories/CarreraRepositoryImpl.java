@@ -1,5 +1,6 @@
 package repositories;
 
+import dto.CarreraDTO;
 import entities.Carrera;
 import entities.Estudiante;
 import entities.EstudianteCarrera;
@@ -22,15 +23,17 @@ public class CarreraRepositoryImpl implements CarreraRepository{
 
     @Override
     @Transactional
-    public List<Carrera> getCarrerasConInscriptos() {
-
-        return em.createQuery("SELECT c, COUNT(ec)" +
-                "FROM Carrera c" +
-                "JOIN c.estudianteCarrera ec" +
-                "GROUP BY c" +
-                "ORDER BY COUNT(ec) DESC", Carrera.class)
-                .getResultList();
+    public List<CarreraDTO> getCarrerasConInscriptos() {
+        return em.createQuery(
+                "SELECT new dto.CarreraDTO(c.id, c.nombre, COUNT(ec)) " +
+                        "FROM Carrera c " +
+                        "JOIN c.estudianteCarrera ec " +
+                        "GROUP BY c.id, c.nombre " +
+                        "ORDER BY COUNT(ec) DESC",
+                CarreraDTO.class
+        ).getResultList();
     }
+
 
 
     @Transactional

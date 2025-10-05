@@ -1,5 +1,6 @@
 package repositories;
 
+import dto.EstudianteDTO;
 import dto.InformeDTO;
 import entities.Carrera;
 import entities.Estudiante;
@@ -29,15 +30,15 @@ public class EstudianteCarreraRepositoryImpl implements EstudianteCarreraReposit
     }
 
     @Override
-    public List<EstudianteCarrera> getByCarrera(Carrera carrera, String ciudad) {
-        TypedQuery<EstudianteCarrera> query = em.createQuery(
-                "SELECT ec " +
+    public List<EstudianteDTO> getByCarrera(Carrera carrera, String ciudad) {
+        TypedQuery<EstudianteDTO> query = em.createQuery(
+                "SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.genero, e.LU) " +
                         "FROM EstudianteCarrera ec " +
+                        "JOIN ec.estudiante e " +
                         "WHERE ec.carrera = :carrera " +
-                        "AND ec.estudiante.id IN (" +
-                        "SELECT e.id " +
-                        "FROM Estudiante e " +
-                        "WHERE e.ciudad = :ciudad)", EstudianteCarrera.class);
+                        "AND e.ciudad = :ciudad",
+                EstudianteDTO.class
+        );
 
         query.setParameter("carrera", carrera);
         query.setParameter("ciudad", ciudad);
@@ -46,23 +47,20 @@ public class EstudianteCarreraRepositoryImpl implements EstudianteCarreraReposit
     }
 
     public List<InformeDTO> getInformes() {
-        Query query = em.createNativeQuery(
-                "SELECT new InformeDTO(" +
-                        "    c.nombre, " +
-                        "    COUNT(ec.id), " +
-                        "    SUM(CASE WHEN ec.graduacion <> 0 THEN 1 ELSE 0 END), " +
-                        "    ec.inscripcion" +
+        return em.createQuery(
+                "SELECT new dto.InformeDTO(" +
+                        "   c.nombre, " +
+                        "   COUNT(ec.id), " +
+                        "   SUM(CASE WHEN ec.graduacion IS NOT NULL AND ec.graduacion <> 0 THEN 1 ELSE 0 END), " +
+                        "   ec.inscripcion" +
                         ") " +
                         "FROM EstudianteCarrera ec " +
                         "JOIN ec.carrera c " +
                         "GROUP BY c.nombre, ec.inscripcion " +
                         "ORDER BY c.nombre ASC, ec.inscripcion ASC",
                 InformeDTO.class
-        );
+        ).getResultList();
 
-        return query.getResultList();
     }
-
-
 
 }

@@ -1,5 +1,6 @@
 package repositories;
 
+import dto.EstudianteDTO;
 import entities.Estudiante;
 import entities.EstudianteCarrera;
 import jakarta.persistence.EntityManager;
@@ -19,8 +20,14 @@ public class EstudianteRepositoryImpl implements EstudianteRepository{
     }
     @Override
     @Transactional
-    public Estudiante getEstudiantePorLU(int LU) {
-        return em.find(Estudiante.class, LU);
+    public EstudianteDTO getEstudiantePorLU(int LU) {
+        TypedQuery<EstudianteDTO> query = em.createQuery(
+                "SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.genero, e.LU) " +
+                        "FROM Estudiante e " +
+                        "WHERE e.LU = :LU",
+                EstudianteDTO.class
+        ).setParameter("LU", LU);
+        return query.getSingleResult();
     }
 
     @Override
@@ -44,19 +51,24 @@ public class EstudianteRepositoryImpl implements EstudianteRepository{
 
     @Override
     @Transactional
-    public List<Estudiante> getEstudiantes() {
+    public List<EstudianteDTO> getEstudiantes() {
         return em.createQuery(
-                        "SELECT e FROM Estudiante e ORDER BY e.apellido DESC",
-                        Estudiante.class)
-                .getResultList();
+                "SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.genero, e.LU) " +
+                        "FROM Estudiante e " +
+                        "ORDER BY e.apellido DESC",
+                EstudianteDTO.class
+        ).getResultList();
     }
+
 
     @Override
     @Transactional
-    public List<Estudiante> getEstudiantesGenero(String genero) {
+    public List<EstudianteDTO> getEstudiantesGenero(String genero) {
         return em.createQuery(
-                        "SELECT e FROM Estudiante e WHERE e.genero = :genero",
-                        Estudiante.class)
+                        "SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.genero, e.LU)" +
+                                " FROM Estudiante e"+
+                                " WHERE e.genero = :genero",
+                        EstudianteDTO.class)
                 .setParameter("genero", genero)
                 .getResultList();
     }

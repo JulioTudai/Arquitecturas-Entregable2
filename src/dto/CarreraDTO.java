@@ -7,20 +7,17 @@ public class CarreraDTO {
 
     private int id;
     private String nombre;
-    private String duracion;
-    private List<String> estudianteCarrera; //todo : lista o de a un solo ? solo nombres?
+    private long cantInscriptos;
 
 
     public CarreraDTO() {
     }
 
-    public CarreraDTO(int id,String nombre, String duracion, List<String> estudianteCarrera) {
+    public CarreraDTO(int id, String nombre, long cantInscriptos) {
         this.id = id;
         this.nombre = nombre;
-        this.duracion = duracion;
-        this.estudianteCarrera = new ArrayList<>();
+        this.cantInscriptos = cantInscriptos;
     }
-
 
     public int getId() {
         return id;
@@ -38,19 +35,20 @@ public class CarreraDTO {
         this.nombre = nombre;
     }
 
-    public String getDuracion() {
-        return duracion;
+    public long getCantInscriptos() {
+        return cantInscriptos;
     }
 
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
+    public void setCantInscriptos(long cantInscriptos) {
+        this.cantInscriptos = cantInscriptos;
     }
 
-    public List<String> getEstudianteCarrera() {
-        return estudianteCarrera;
-    }
-
-    public void setEstudianteCarrera(List<String> estudianteCarrera) {
-        this.estudianteCarrera = estudianteCarrera;
+    @Override
+    public String toString() {
+        return "CarreraDTO{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", cantInscriptos=" + cantInscriptos +
+                '}';
     }
 }
